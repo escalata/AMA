@@ -12,11 +12,11 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 - **Conda**
 
-  1. Please checkout the [Conda Documentation](https://github.com/conda/conda-docs).
+1. Please checkout the [Conda Documentation](https://github.com/conda/conda-docs).
 
   2. To execute all tasks in one single conda environment the `AMA.yaml` contains all required packages and the corresponding channels
    
-     - If you want to update your current environment manually you should add the following packages:
+     - If you want to update your current environment manually you should add the following **conda packages**:
        
        - python
        - snakemake
@@ -27,7 +27,10 @@ The workflow was designed to be fast and memory-optimized. The download works wi
        - wget
        - entrez-direct
 
-  3.
+  3. Otherwise navigate to the location of the pulled AMA.yaml file and execute `conda env create -f AMA.yaml`
+
+
+  4. To activate the created conda environmentconda and getting started execute `conda activate AMA`
 
 
 
