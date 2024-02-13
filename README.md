@@ -1,6 +1,6 @@
 # AMA
 
-This is an automated workflow tool for downloading and processing bioinformatic data. Tis workflow was developed by Agata and Max in collaboration with the bioinformatics group BioLab at the University of Melbourne under the supervision of Heroen Verbruggen.
+This is an automated workflow tool for downloading and processing bioinformatic data. This workflow was developed by Agata and Max in collaboration with the bioinformatics group BioLab at the University of Melbourne under the supervision of Heroen Verbruggen.
 
 
 ## Introduction
@@ -8,7 +8,7 @@ This is an automated workflow tool for downloading and processing bioinformatic 
 The workflow was designed to be fast and memory-optimized. The download works with an input list of SRA accessions from the NIH database. 10% of this data is downloaded in order to validate the individual SRAs according to the parameters _perc_identity_, _qcov_hsp_perc_. Subsequently, promising data sets are entirely downloaded and analyzed. The pipeline was designed to be modular, allowing various bioinformatic tools to be used to preprocess and subsequently analyze the data. By default, **Fastp** is used in the workflow for preprocessing and then **Blast** for analyzing and creating a results database. However, any other precrossesing tool and analysis tool can also be used, only the snakemake workflow has to be adapted. 
 
 
-## Requirements
+## Installation
 
 - **Conda**
 
@@ -33,6 +33,9 @@ The workflow was designed to be fast and memory-optimized. The download works wi
   4. To activate the created conda environmentconda and getting started execute `conda activate AMA`
 
 
+## Requirements
+
+- **Config Files**
 
 
 ## Running the Code
