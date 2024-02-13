@@ -41,7 +41,7 @@ Before the snakemake workflow can be started, the configfiles of the various mod
 
     - `csv_file:` The path to the csv file containing the results (SRA accessions) generated out of the search string from the NIH database search `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
 
-    - `output_directory:` The path including a created folder in which the results shall be saved, for example `/genbank_store/biodiversity_project/result1`
+    - `output_directory:` The path is including a created folder in which the results shall be saved, for example `/genbank_store/biodiversity_project/result1`
 
     - `download_perc:` The percentage of how much of the datasets should be downloaded for each individual SRR accession we would suggest `10` for the validation download and `100` for the full download later on
 
