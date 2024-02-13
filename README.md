@@ -14,7 +14,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
    - Please checkout the [Conda Documentation](https://github.com/conda/conda-docs).
 
-  1.To execute all tasks in one single conda environment the `AMA.yaml` contains all required packages and the corresponding channels
+   - To execute all tasks in one single conda environment the `AMA.yaml` contains all required packages and the corresponding channels
    
      - If you want to update your current environment manually you should add the following **conda packages**:
        
@@ -27,10 +27,10 @@ The workflow was designed to be fast and memory-optimized. The download works wi
        - wget
        - entrez-direct
 
-   Otherwise navigate to the location of the pulled AMA.yaml file and execute `conda env create -f AMA.yaml`
+   - Otherwise navigate to the location of the pulled AMA.yaml file and execute `conda env create -f AMA.yaml`
 
 
-   To activate the created conda environmentconda and getting started execute `conda activate AMA`
+   - To activate the created conda environmentconda and getting started execute `conda activate AMA`
 
 
 ## Requirements
