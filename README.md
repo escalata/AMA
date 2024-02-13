@@ -48,18 +48,15 @@ Before the snakemake workflow can be started, the configfiles of the various mod
 
 - **Config_alignment**
 
-    - `csv_file
-Alignment
-csv_file: "/genbank_store/agata/data/SRA_list_Marcelino_firstten.csv"
-output_directory: "/genbank_store/max/download/smk_download"
-query_fasta: "/genbank_store/agata/data/Ostreobium_query.fa"
-blast_search:
-    perc_identity: xy
-    qcov_hsp_perc: xy
+    - `csv_file`: Same like above `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
 
-perc_identity: Threshold, how much percentage are matching
-qcov_hsp_perc: Threshold, how much percentage of the query fasta is covered
+    - `output_directory:` Same like above `/genbank_store/biodiversity_project/result1`
 
+    - `query_fasta:` The path to the reference sequence with which the blast search compares the sequences from the NIH database `/genbank_store/biodiversity_project/data/example_reference.fa`
+
+    - `perc_identity:` Treshold, how much percentage of the sequence should matching `95`
+
+    - `qcov_hsp_perc:` Treshold, how much percentage of the query fasta is covered `90`
 
 
 
