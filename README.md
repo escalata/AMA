@@ -5,7 +5,31 @@ This is an automated workflow tool for downloading and processing bioinformatic 
 
 ## Introduction
 
-The workflow was designed to be fast and memory-optimized. The download works with an input list of SRA accessions from the NIH database. 10% of this data is downloaded in order to validate the individual SRAs according to the parameters perc_identity, qcov_hsp_perc. Subsequently, promising data sets are entirely downloaded and analyzed. The pipeline was designed to be modular, allowing various bioinformatic tools to be used to preprocess and subsequently analyze the data. By default, Fastp is used in the workflow for preprocessing and then Bast for analyzing and creating a results database. However, any other precrossesing tool and analysis tool can also be used, only the Snakemake workflow has to be adapted. 
+The workflow was designed to be fast and memory-optimized. The download works with an input list of SRA accessions from the NIH database. 10% of this data is downloaded in order to validate the individual SRAs according to the parameters _perc_identity_, _qcov_hsp_perc_. Subsequently, promising data sets are entirely downloaded and analyzed. The pipeline was designed to be modular, allowing various bioinformatic tools to be used to preprocess and subsequently analyze the data. By default, **Fastp** is used in the workflow for preprocessing and then **Blast** for analyzing and creating a results database. However, any other precrossesing tool and analysis tool can also be used, only the snakemake workflow has to be adapted. 
+
+
+## Requirements
+
+- **Conda**
+
+  1. Please checkout the [Conda Documentation](https://github.com/conda/conda-docs).
+
+  2. To execute all tasks in one single conda environment the `AMA.yaml` contains all required packages and the corresponding channels
+   
+     - If you want to update your current environment manually you should add the following packages:
+       
+       - python
+       - snakemake
+       - sra-tools
+       - fastp
+       - blast
+       - curl
+       - wget
+       - entrez-direct
+
+  3.
+
+
 
 
 ## Running the Code
