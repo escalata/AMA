@@ -76,23 +76,22 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 ## Example usage
 
-- **Getting started**
-
-> [!TIP]
+> [!IMPORTANT]
 > - Activate the previously created conda environment 
 > - Make sure the csv_file and query_fasta is provided
-> - Adjust all parameters and paths in the config files Helpful advice for doing things better or more easily.
-
-
-  
-
-> [!IMPORTANT]
-> Helpful advice for doing things better or more easily.
+> - Adjust all parameters and paths in the config files Helpful advice for doing things better or more easily
 
 
 - **Partial Download**
 
-Running the download 
+   The first step and modular part will be the **partial download**
+
+    Running the download:
+     >
+     > ```bash
+     > snakemake --snakefile /genbank_store/biodiversity_project/download/smk_download_new_final.smk --cores 16 --configfile /genbank_store/biodiversity_project/download/download_config.yaml   
+     > ```
+
 
  
 - **Processing**
