@@ -98,7 +98,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 - **Processing**
 
-   The next step is the preprocessing and alignment with FastP and Blast there are plenty of paramenters to adjust preprocessing trimming and quality control of the input sequences which can change the output significant if you want to adjust some variables have a look at [FastP] (https://github.com/OpenGene/fastp) and [Blast] (https://blast.ncbi.nlm.nih.gov/Blast.cgi) and change it in the `smk_alignment2_final.smk`:
+   The next step is the preprocessing and alignment with FastP and Blast there are plenty of paramenters to adjust preprocessing trimming and quality control of the input sequences which can change the output significant if you want to adjust some variables have a look at [FastP](https://github.com/OpenGene/fastp) and [Blast](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and change it in the `smk_alignment2_final.smk`:
 
      >
      > ```bash
