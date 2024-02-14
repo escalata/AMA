@@ -76,6 +76,14 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 - **Getting started**
 
+> [!TIP]
+> Helpful advice for doing things better or more easily.
+
+
+   > [!TIP]
+   > Helpful advice for doing things better or more easily.
+
+
      > [!NOTE]
      > - Activate the previously created conda environment 
      > - Make sure the csv_file and query_fasta is provided
@@ -85,6 +93,9 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 
 > [!TIP]
+> Helpful advice for doing things better or more easily.
+
+> [!IMPORTANT]
 > Helpful advice for doing things better or more easily.
 
 
