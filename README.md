@@ -76,10 +76,10 @@ Before the snakemake workflow can be started, the config files of the various mo
 
 - **Getting started**
 
-    [!IMPORTANT]
-    - Activate the previously created conda environment 
-    - Make sure the csv_file and query_fasta is provided
-    - Adjust all parameters and paths in the config files
+     > [!NOTE]
+     > - Activate the previously created conda environment 
+     > - Make sure the csv_file and query_fasta is provided
+     > - Adjust all parameters and paths in the config files
 
 - **Partial Download**
 
