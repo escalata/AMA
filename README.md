@@ -51,7 +51,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 
 
-- **Config_download**
+- **partial_download_config**
 
    - `csv_file:` The path to the csv file containing the results (SRA accessions) generated with the selected search string within the NIH database search `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
 
@@ -60,7 +60,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
    - `download_perc:` The percentage of how much of the datasets should be downloaded for each individual SRR accession we would suggest `10` for the validation download and `100` for the full download later on
 
 
-- **Config_alignment**
+- **alignment_config**
 
    - `csv_file`: Same like above `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
 
@@ -82,19 +82,28 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 > - Adjust all parameters and paths in the config files Helpful advice for doing things better or more easily
 
 
+> [!IMPORTANT]
+> - keep in mind that the following code is just an explaination you have to adjust all paths and inputs according to your operation system
+
+
 - **Partial Download**
 
-   The first step and modular part will be the **partial download**
+   The first step and modular part of the workflow will be the partial download running the skript to validate the datasets fast and memory-optimized with the snakemake syntax:
 
-    Running the download:
      >
      > ```bash
-     > snakemake --snakefile /genbank_store/biodiversity_project/download/smk_download_new_final.smk --cores 16 --configfile /genbank_store/biodiversity_project/download/download_config.yaml   
+     > snakemake --snakefile /genbank_store/biodiversity_project/download/smk_download_new_final.smk --configfile /genbank_store/biodiversity_project/download/partial_download_config.yaml --cores 16
      > ```
 
 
- 
 - **Processing**
+
+   The next step is the preprocessing and alignment with FastP and Blast there are plenty of paramenters to adjust preprocessing trimming and quality control of the input sequences which can change the output significant if you want to adjust some variables have a look at FastP and Blast and change it in the alignment.snk:
+
+     >
+     > ```bash
+     > snakemake --snakefile /genbank_store/biodiversity_project/workflow/smk_alignment2_final.smk --configfile /genbank_store/biodiversity_project/workflow/alignment_config.yaml --cores 16
+     > ```
 
 
 - **Full Download**
