@@ -39,34 +39,36 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 ## Requirements
 
-Set up all 
+- Set up all required data
+
+   - you need the input `csv_file` containing all of the retrieved SRA accessions found with the selected search string within the NIH database search.
+
+   - you need the input `query_fasta` containing the reference sequence which the processing algorithm, in our case **Blast**, needs to compare with the individual sequences from the SRA accessions and calculate their match.
 
 
+- Before the snakemake workflow can be started, the config files of the various modular steps must be customized with **individual output paths** and **desired processing parameters**:
 
 
-Before the snakemake workflow can be started, the config files of the various modular steps must be customized with **individual output paths** and **desired processing parameters**:
+  - **Config_download**
+
+     - `csv_file:` The path to the csv file containing the results (SRA accessions) generated with the selected search string within the NIH database search `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
+
+     - `output_directory:` The path in which the results shall be saved it is important that the input contains a previously created folder as destination, for example `/genbank_store/biodiversity_project/result1`
+
+     - `download_perc:` The percentage of how much of the datasets should be downloaded for each individual SRR accession we would suggest `10` for the validation download and `100` for the full download later on
 
 
-- **Config_download**
+  - **Config_alignment**
 
-    - `csv_file:` The path to the csv file containing the results (SRA accessions) generated out of the search string from the NIH database search `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
+     - `csv_file`: Same like above `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
 
-    - `output_directory:` The path in which the results shall be saved it is important that the input contains a previously created folder as destination, for example `/genbank_store/biodiversity_project/result1`
+     - `output_directory:` Same like above `/genbank_store/biodiversity_project/result1`
 
-    - `download_perc:` The percentage of how much of the datasets should be downloaded for each individual SRR accession we would suggest `10` for the validation download and `100` for the full download later on
+     - `query_fasta:` The path to the reference sequence which Blast needs to compare the individual sequences from the SRA accessions and calculate their match. `/genbank_store/biodiversity_project/data/example_reference.fa`
 
+     - `perc_identity:` Treshold, how much percentage of the sequence should matching `95`
 
-- **Config_alignment**
-
-    - `csv_file`: Same like above `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
-
-    - `output_directory:` Same like above `/genbank_store/biodiversity_project/result1`
-
-    - `query_fasta:` The path to the reference sequence with which the blast search compares the sequences from the NIH database `/genbank_store/biodiversity_project/data/example_reference.fa`
-
-    - `perc_identity:` Treshold, how much percentage of the sequence should matching `95`
-
-    - `qcov_hsp_perc:` Treshold, how much percentage of the query fasta is covered `90`
+     - `qcov_hsp_perc:` Treshold, how much percentage of the query fasta is covered `90`
 
 
 
