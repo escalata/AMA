@@ -46,7 +46,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
    - you need the input `query_fasta` containing the reference sequence which the processing algorithm (in our case **Blast**) needs to compare with the individual sequences from the SRA accessions and calculate their match.
 
 
-Before the snakemake workflow can be started, the config files of the various modular steps must be customized with **individual output paths** and **desired processing parameters**:
+> Note: Before the snakemake workflow can be started, the config files of the various modular steps must be customized with **individual output paths** and **desired processing parameters**
 
 
 - **Config_download**
@@ -80,6 +80,13 @@ Before the snakemake workflow can be started, the config files of the various mo
      > - Activate the previously created conda environment 
      > - Make sure the csv_file and query_fasta is provided
      > - Adjust all parameters and paths in the config files
+
+
+
+
+> [!TIP]
+> Helpful advice for doing things better or more easily.
+
 
 - **Partial Download**
 
