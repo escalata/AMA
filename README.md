@@ -82,7 +82,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 > - Adjust all parameters and paths in the config files Helpful advice for doing things better or more easily
 
 
-> [!IMPORTANT]
+> [!TIP]
 > - keep in mind that the following code is just an explaination you have to adjust all paths and inputs according to your operation system
 
 
@@ -98,7 +98,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 - **Processing**
 
-   The next step is the preprocessing and alignment with FastP and Blast there are plenty of paramenters to adjust preprocessing trimming and quality control of the input sequences which can change the output significant if you want to adjust some variables have a look at FastP and Blast and change it in the alignment.snk:
+   The next step is the preprocessing and alignment with FastP and Blast there are plenty of paramenters to adjust preprocessing trimming and quality control of the input sequences which can change the output significant if you want to adjust some variables have a look at [FastP] (https://github.com/OpenGene/fastp) and [Blast] (https://blast.ncbi.nlm.nih.gov/Blast.cgi) and change it in the `smk_alignment2_final.smk`:
 
      >
      > ```bash
