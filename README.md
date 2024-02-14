@@ -17,7 +17,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
    - To execute all tasks in one single conda environment the `AMA.yaml` contains all required packages and the corresponding channels
    
 
-   - > Note: If you want to update your current environment manually you should add the following **conda packages**:
+     > Note: If you want to update your current environment manually you should add the following **conda packages**:
        >
        > ```bash   
        > - python
@@ -76,10 +76,10 @@ Before the snakemake workflow can be started, the config files of the various mo
 
 - **Getting started**
 
-  > [!IMPORTANT]
-  > - Activate the previously created conda environment 
-  > - Make sure the csv_file and query_fasta is provided
-  > - Adjust all parameters and paths in the config files
+    [!IMPORTANT]
+    - Activate the previously created conda environment 
+    - Make sure the csv_file and query_fasta is provided
+    - Adjust all parameters and paths in the config files
 
 - **Partial Download**
 
