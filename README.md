@@ -89,26 +89,32 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 - **Partial Download**
 
-   The first step and modular part of the workflow will be the partial download running the skript to validate the datasets fast and memory-optimized with the snakemake syntax:
+   The first step and modular part of the workflow will be the partial download running the snakefile `download.smk` skript with `download_perc:` parameter 10-20 to validate the datasets fast and memory-optimized with the snakemake bash syntax:
 
      >
      > ```bash
-     > snakemake --snakefile /genbank_store/biodiversity_project/download/smk_download_new_final.smk --configfile /genbank_store/biodiversity_project/download/partial_download_config.yaml --cores 16
+     > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/download_config.yaml --cores 16
      > ```
 
 
 - **Processing**
 
-   The next step is the preprocessing and alignment with FastP and Blast there are plenty of paramenters to adjust preprocessing trimming and quality control of the input sequences which can change the output significant if you want to adjust some variables have a look at [FastP](https://github.com/OpenGene/fastp) and [Blast](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and change it in the `smk_alignment2_final.smk`:
+   The next step is the preprocessing and alignment with FastP and Blast there are plenty of paramenters to adjust preprocessing trimming and quality control of the input sequences which can change the output significant if you want to adjust some variables have a look at [FastP](https://github.com/OpenGene/fastp) and [Blast](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and change it in the snakefile `alignment.smk` script then run it with the snakemake bash syntax:
 
      >
      > ```bash
-     > snakemake --snakefile /genbank_store/biodiversity_project/workflow/smk_alignment2_final.smk --configfile /genbank_store/biodiversity_project/workflow/alignment_config.yaml --cores 16
+     > snakemake --snakefile /genbank_store/biodiversity_project/workflow/alignment.smk --configfile /genbank_store/biodiversity_project/workflow/alignment_config.yaml --cores 16
      > ```
 
 
 - **Full Download**
 
+If your data looks promising the next part of the modular workflow will be the full download running the snakefile `download.smk` skript with `download_perc:` parameter 100 to get access to the whole dataset with the snakemake bash syntax:
+
+     >
+     > ```bash
+     > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/download_config.yaml --cores 16
+     > ```
 
 
 ## Output Structure
