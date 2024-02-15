@@ -1,0 +1,3 @@
+csv_file: '/genbank_store/biodiversity_project/data/SRA_list_Marcelino_firstten.csv'
+output_directory: '/genbank_store/biodiversity_project/download/results1'
+download_perc: 10
