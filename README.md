@@ -27,7 +27,8 @@ The workflow was designed to be fast and memory-optimized. The download works wi
        > - blast
        > - curl
        > - wget
-       > - entrez-direct
+       > - bc
+       > - entrez-direct       
        > ```
 
 
