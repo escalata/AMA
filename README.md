@@ -83,7 +83,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 
 > [!TIP]
-> - keep in mind that the following code is just an explaination you have to adjust all paths and inputs according to your operation system
+> - Keep in mind that the following code is just an explaination you have to adjust all paths and inputs according to your operation system
 
 
 - **Partial Download**
