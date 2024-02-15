@@ -109,7 +109,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 - **Full Download**
 
-If your data looks promising the next part of the modular workflow will be the full download running the snakefile `download.smk` skript with `download_perc:` parameter 100 to get access to the whole dataset with the snakemake bash syntax:
+   If your data looks promising the next part of the modular workflow will be the full download running the snakefile `download.smk` skript with `download_perc:` parameter 100 to get access to the whole dataset with the snakemake bash syntax:
 
      >
      > ```bash
