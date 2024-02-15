@@ -52,7 +52,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 
 
-- **partial_download_config**
+- **download_config**
 
    - `csv_file:` The path to the csv file containing the results (SRA accessions) generated with the selected search string within the NIH database search `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
 
