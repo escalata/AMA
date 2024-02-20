@@ -117,7 +117,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
      > ```
 
 
-## Output Structure
+## Output structure
 
 The pipeline will create folders per SRA run accessions and generate results using the run accession as the prefix (**XXX**). The download and analysis of data will be stored in the given superfolder output directory `results1`. Each modular part of the analysis workflow is stored in their corresponding folders within the single run accessions. This makes the data clean seperated and easy to change a part of the workflow. The results of the analysis workflow among all SRA run accessions is processed and stored in the `blast_db` and the visulized in the `results.txt`.
 
@@ -125,27 +125,6 @@ The pipeline will create folders per SRA run accessions and generate results usi
 ### The complete outline of directory structure is shown below:
 
 ![Output structure and complete file hirarchie](https://github.com/escalata/AMA/blob/main/Picture_complete_hirarchie.png)
-
-### Download (Raw_fastq and Metadata)
-
-<img src="https://github.com/escalata/AMA/blob/main/Picture_raw_fastq.png" width="300" height="200" />
-
-<img src="https://github.com/escalata/AMA/blob/main/Picture_metadata.png" width="300" height="200" />
-   
-   ![Metadata output structure](https://github.com/escalata/AMA/blob/main/Picture_metadata.png)
-
-### Preprocessing (Fastp)
-
-![Fastp output structure](https://github.com/escalata/AMA/blob/main/Picture_fastp.png)
-
-### Analysis (Blast)
-
-![Blast output structure](https://github.com/escalata/AMA/blob/main/Picture_blast.png)
-
-### Results (Blastdb)
-
-![Blast_db output structure](https://github.com/escalata/AMA/blob/main/Picture_blast_db.png)
-
 
 
 ## Workflow
