@@ -69,9 +69,9 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
    - `query_fasta:` The path to the reference sequence against Blast compares the individual sequences and calculates their match `/genbank_store/biodiversity_project/data/example_reference.fa`
 
-   - `perc_identity:` Treshold, how much percentage of the sequence should matching `95`
+   - `perc_identity:` Threshold, how much percentage of the sequence should matching `95`
 
-   - `qcov_hsp_perc:` Treshold, how much percentage of the query fasta is covered `90`
+   - `qcov_hsp_perc:` Threshold, how much percentage of the query fasta is covered `90`
 
 
 
