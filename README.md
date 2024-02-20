@@ -119,5 +119,10 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 ## Output Structure
 
+![Output structure and File hirarchie](https://github.com/escalata/AMA/blob/main/PictureFilesHirarchie.png)
+
+
+
+
 
 ### Dependencies
