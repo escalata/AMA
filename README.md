@@ -12,7 +12,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 - **Conda**
 
-   - Please checkout the [Conda Documentation](https://github.com/conda/conda-docs).
+   - Please check out the [Conda Documentation](https://github.com/conda/conda-docs).
 
    - To execute all tasks in one single conda environment the `AMA.yaml` contains all required packages and the corresponding channels
    
