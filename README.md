@@ -128,6 +128,8 @@ The pipeline will create folders per SRA run accessions and generate results usi
 
 ### Download (Raw_fastq and Metadata)
 
+<img src="https://github.com/escalata/AMA/blob/main/Picture_raw_fastq.png" width="400" height="400" />
+
    ![Raw_fastq output structure](https://github.com/escalata/AMA/blob/main/Picture_raw_fastq.png)
 
    ![Metadata output structure](https://github.com/escalata/AMA/blob/main/Picture_metadata.png)
