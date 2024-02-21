@@ -1,5 +1,5 @@
 import os 
-configfile: "config.yaml"
+configfile: "config_download.yaml"
 
 # Define global variables from configuration file
 CSV_FILE = config["csv_file"]
@@ -27,7 +27,7 @@ rule all:
         expand("{output_directory}/{sra_id}/raw_fastq/{sra_id}_1.fastq", output_directory=OUTPUT_DIRECTORY, sra_id=extract_sra_ids(CSV_FILE)),
         expand("{output_directory}/{sra_id}/raw_fastq/{sra_id}_2.fastq", output_directory=OUTPUT_DIRECTORY, sra_id=extract_sra_ids(CSV_FILE)),
         # Path to the file listing all project IDs
-        "{output_directory}/project_ids.txt".format(output_directory=OUTPUT_DIRECTORY)
+        "{output_directory}/publication_info/project_ids.txt".format(output_directory=OUTPUT_DIRECTORY)
 
 
 # Rule to create directories for each ID and initialize metadata files
@@ -122,7 +122,7 @@ rule process_sra_id:
         fi
         """
 
-# Rule to parse metadata files and extract project IDs
+# Rule to parse metadata files and extract project IDs safe it into publication_info folder
 rule parse_metadata:
     input:
         # Input metadata files for all SRA IDs
@@ -130,9 +130,13 @@ rule parse_metadata:
                output_directory=OUTPUT_DIRECTORY, 
                sra_id=extract_sra_ids(CSV_FILE))
     output:
-        # Output file listing all project IDs
-        project_ids_file = "{output_directory}/project_ids.txt"
+        # Output file listing all project IDs, now within the publication_info folder
+        project_ids_file = "{output_directory}/publication_info/project_ids.txt"
     run:
+        # Create the publication_info directory if it does not exist
+        if not os.path.exists(os.path.dirname(output.project_ids_file)):
+            os.makedirs(os.path.dirname(output.project_ids_file))
+
         # Extract project IDs from metadata files and write them to the output file
         project_ids = {}
         for metadata_file in input:
