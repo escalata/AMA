@@ -26,9 +26,7 @@ rule all:
         # Generate paths for .fastq files based on SRA IDs extracted from the CSV file
         expand("{output_directory}/{sra_id}/raw_fastq/{sra_id}_1.fastq", output_directory=OUTPUT_DIRECTORY, sra_id=extract_sra_ids(CSV_FILE)),
         expand("{output_directory}/{sra_id}/raw_fastq/{sra_id}_2.fastq", output_directory=OUTPUT_DIRECTORY, sra_id=extract_sra_ids(CSV_FILE)),
-        # Path to the file listing all project IDs
-        "{output_directory}/publication_info/project_ids.txt".format(output_directory=OUTPUT_DIRECTORY)
-
+    
 
 # Rule to create directories for each ID and initialize metadata files
 rule create_directories_and_initialize_metadata:
@@ -122,41 +120,6 @@ rule process_sra_id:
         fi
         """
 
-# Rule to parse metadata files and extract project IDs safe it into publication_info folder
-rule parse_metadata:
-    input:
-        # Input metadata files for all SRA IDs
-        expand("{output_directory}/{sra_id}/metadata/{sra_id}.run.metadata.txt", 
-               output_directory=OUTPUT_DIRECTORY, 
-               sra_id=extract_sra_ids(CSV_FILE))
-    output:
-        # Output file listing all project IDs, now within the publication_info folder
-        project_ids_file = "{output_directory}/publication_info/project_ids.txt"
-    run:
-        # Create the publication_info directory if it does not exist
-        if not os.path.exists(os.path.dirname(output.project_ids_file)):
-            os.makedirs(os.path.dirname(output.project_ids_file))
-
-        # Extract project IDs from metadata files and write them to the output file
-        project_ids = {}
-        for metadata_file in input:
-            # Skip processing for the header 'acc'
-            if 'acc.run.metadata.txt' in metadata_file:
-                continue
-
-            with open(metadata_file, 'r') as file:
-                for line in file:
-                    parts = line.strip().split(',')
-                    if len(parts) > 21:  # Ensure there are enough fields
-                        sra_id = os.path.basename(metadata_file).split('.')[0]
-                        project_id = parts[21]  # ProjectID field (22th field, python index 21)
-                        project_ids[sra_id] = project_id
-
-        # Write project IDs to the output file
-        with open(output.project_ids_file, 'w') as file:
-            for sra_id, project_id in project_ids.items():
-                file.write(f"{sra_id}: {project_id}\n")
-
 
 # Rule to signify the end of the workflow
 rule finish_workflow:
@@ -170,4 +133,6 @@ rule finish_workflow:
                sra_id=extract_sra_ids(CSV_FILE))
     output:
     shell:
-        "echo 'Partial download and metadata collection complete.'"
+        """
+        echo "Download and metadata collection successfully completed!"
+        """
