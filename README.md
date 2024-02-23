@@ -124,7 +124,7 @@ The pipeline will create folders per SRA run accessions and generate results usi
  
 ### The complete outline of directory structure is shown below:
 
-![Output structure and complete file hirarchie](https://github.com/escalata/AMA/blob/main/Picture_complete_hirarchie.png)
+![Output structure and complete file hirarchie](https://github.com/escalata/AMA/blob/main/Picture_complete_hirarchieV2.png)
 
 
 ## Workflow
