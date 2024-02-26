@@ -29,13 +29,13 @@ def extract_sra_ids(csv_file):
 # Rule to define the final output files of the workflow
 rule all:
     input:
-        expand("{output_directory}/download_summary.txt", output_directory=OUTPUT_DIRECTORY)
+        expand("{output_directory}/download_summary.txt", output_directory=OUTPUT_DIRECTORY),
+        expand("{output_directory}/downloaded_sra_ids.csv", output_directory=OUTPUT_DIRECTORY)
 
 
 # Define the handlers
 onstart:
     print("Starting SRA download workflow.")
-
 onsuccess:
     shell("""
         echo 'Download Summary' > {config[output_directory]}/download_summary.txt
@@ -51,8 +51,7 @@ onsuccess:
     minutes, seconds = divmod(remainder, 60)
     # Print the runtime
     print("---------------------------------")
-    print(f"Total runtime: {hours} hours, {minutes} minutes, {seconds} seconds")
-    
+    print(f"Total runtime: {hours} hours, {minutes} minutes, {seconds} seconds")    
 onerror:
     print("Error encountered during SRA download workflow.")
 
@@ -249,3 +248,16 @@ rule summarize_downloads:
             f.write("---------------------------------\n")
             f.write(f"Successful downloads: {success_count}\n")
             f.write(f"Failed downloads: {failed_count}\n")
+
+
+# Rule to write successful SRA IDs to a new CSV file "downloaded_sra_ids.csv"
+rule write_successful_ids_to_csv:
+    input:
+        success_sra_list = "{output_directory}/success_sra_ids.txt"
+    output:
+        csv = "{output_directory}/downloaded_sra_ids.csv"
+    run:
+        with open(input.success_sra_list, 'r') as infile, open(output.csv, 'w') as outfile:
+            outfile.write("acc\n")
+            for line in infile:
+                outfile.write(f"{line}")

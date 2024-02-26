@@ -1,12 +1,16 @@
 import os
 from Bio import SeqIO
+from datetime import datetime
 
 configfile: "config_alignment.yaml"
 
-# global variables from the config file
+
+# Define global variables from configuration file
 csv_file = config["csv_file"]
 output_directory = config["output_directory"]
 query_fasta = config["query_fasta"]
+# Globale variable for starttime
+start_time = datetime.now()
 
 
 # Function to extract SRA IDs from a given CSV file
@@ -15,6 +19,7 @@ def extract_sra_ids(csv_file):
     with open(csv_file, 'r') as file:
         for line in file:
             sra_id = line.strip()
+            # Add SRA ID to the list if it's not empty and doesn't start with "acc"
             if sra_id and not sra_id.startswith("acc"):
                 sra_ids.append(sra_id)
     return sra_ids
@@ -27,7 +32,8 @@ def calculate_average_length(fasta_file):
     for seq_record in SeqIO.parse(fasta_file, 'fasta'):
         total_length += len(seq_record.seq)
         num_sequences += 1
-    return int(total_length / num_sequences if num_sequences else 0)
+    average_length = int(total_length / num_sequences if num_sequences else 0)
+    return average_length
 
 
 # Fragment sequences in a FASTA file into smaller pieces
@@ -44,7 +50,7 @@ def split_sequences(input_fasta, output_fasta, window_size):
                     break
 
 
-# Specifies the final outputs of the workflow
+# Rule to define the final output files of the workflow
 rule all:
     input:
         alignment_results = os.path.join(config["output_directory"], "alignment_results.txt"),
@@ -54,22 +60,74 @@ rule all:
         publications = os.path.join(config["output_directory"], "publication_info/matching_publications.txt")
 
 
-# Preprocess raw FASTQ files using fastp
+# Define the handlers
+onstart:
+    print("Starting SRA processing workflow.")
+onsuccess:
+   # Read the number of successfully downloaded SRA IDs
+    with open(os.path.join(config["output_directory"], "success_sra_ids.txt"), 'r') as file:
+        success_sra_ids = [line.strip() for line in file.readlines()]
+    num_success_sra_ids = len(success_sra_ids)
+
+    # Read the number of entries in the results_sra_ids.csv
+    with open(os.path.join(config["output_directory"], "results_sra_ids.csv"), 'r') as file:
+        # Skip the header
+        next(file, None)
+        sra_ids_from_results = [line.strip() for line in file]
+    num_sra_ids_from_results = len(sra_ids_from_results)
+
+    # Read the BLAST Results
+    with open(os.path.join(config["output_directory"], "alignment_results.txt"), 'r') as file:
+        blast_results = file.readlines()
+    num_blast_results = len(blast_results)
+
+    # Calculate the runtime
+    end_time = datetime.now()
+    duration = end_time - start_time
+    hours, remainder = divmod(duration.seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+
+    # Print the results
+    print("Processing Summary")
+    print("---------------------------------")
+    print(f"Number of successfully downloaded SRA IDs: {num_success_sra_ids}")
+    print(f"Number of SRA IDs with results: {num_sra_ids_from_results}")
+    print(f"Number of results from the BLAST search with perc_identity= {config['blast_search']['perc_identity']} and qcov_hsp_perc= {config['blast_search']['qcov_hsp_perc']}: {num_blast_results}")
+    print("---------------------------------")
+    print(f"Total runtime: {hours} hours, {minutes} minutes, {seconds} seconds")    
+onerror:
+    print("Error encountered during SRA processing workflow.")
+
+
+# Rule to preprocess raw FASTQ files using fastp
 rule preprocess_fastq:
     input:
-        raw_fastq1 = "{output_directory}/{sra_id}/raw_fastq/{sra_id}_1.fastq",
-        raw_fastq2 = "{output_directory}/{sra_id}/raw_fastq/{sra_id}_2.fastq"
+        raw_fastq1 = "{output_directory}/{sra_id}/raw_fastq/{sra_id}_1.fastq"
     output:
         clean_fastq1 = "{output_directory}/{sra_id}/fastp/{sra_id}_clean_1.fastq",
         clean_fastq2 = "{output_directory}/{sra_id}/fastp/{sra_id}_clean_2.fastq"
     shell:
         """
-        mkdir -p {output_directory}/{wildcards.sra_id}/fastp
-        fastp -i {input.raw_fastq1} -o {output.clean_fastq1} -I {input.raw_fastq2} -O {output.clean_fastq2} -h "{output_directory}/{wildcards.sra_id}/fastp/fastp.html" -j "{output_directory}/{wildcards.sra_id}/fastp/fastp.json"
+        # Create the directory for the output, if it does not already exist.
+        mkdir -p {wildcards.output_directory}/{wildcards.sra_id}/fastp
+
+        # Check if raw_fastq2 exists and execute fastp with one input or two inputs
+        if [ -f "{wildcards.output_directory}/{wildcards.sra_id}/raw_fastq/{wildcards.sra_id}_2.fastq" ]; then
+           
+            # Fastp with two inputs
+            fastp -i {wildcards.output_directory}/{wildcards.sra_id}/raw_fastq/{wildcards.sra_id}_1.fastq -o {output.clean_fastq1} -I {wildcards.output_directory}/{wildcards.sra_id}/raw_fastq/{wildcards.sra_id}_2.fastq -O {output.clean_fastq2} -h {wildcards.output_directory}/{wildcards.sra_id}/fastp/fastp.html -j {wildcards.output_directory}/{wildcards.sra_id}/fastp/fastp.json
+        
+        else
+            # Fastp with one input
+            fastp -i {wildcards.output_directory}/{wildcards.sra_id}/raw_fastq/{wildcards.sra_id}_1.fastq -o {output.clean_fastq1} -h {wildcards.output_directory}/{wildcards.sra_id}/fastp/fastp.html -j {wildcards.output_directory}/{wildcards.sra_id}/fastp/fastp.json
+
+            # Create a empty dummy fastq2 for further processes
+            touch {output.clean_fastq2}
+        fi
         """
 
 
-# Convert clean FASTQ files to FASTA format
+#Rule to convert preprocessed clean FASTQ files to FASTA format
 rule convert_fastq_to_fasta:
     input:
         clean_fastq1 = "{output_directory}/{sra_id}/fastp/{sra_id}_clean_1.fastq",
@@ -79,13 +137,25 @@ rule convert_fastq_to_fasta:
         fasta2 = "{output_directory}/{sra_id}/blast/{sra_id}_2.fasta"
     shell:
         """
+        # Create the directory for the output, if it does not already exist.
         mkdir -p {output_directory}/{wildcards.sra_id}/blast
+
+        # Converts FASTQ files into FASTA format
         seqtk seq -a {input.clean_fastq1} > {output.fasta1}
         seqtk seq -a {input.clean_fastq2} > {output.fasta2}
+
+        # Check whether the clean_fastq files are empty and delete them
+        if [ ! -s {input.clean_fastq1} ]; then
+            rm {input.clean_fastq1}
+        fi
+
+         if [ ! -s {input.clean_fastq2} ]; then
+            rm {input.clean_fastq2}
+        fi
         """
 
 
-# Merge individual FASTA files into a single file
+# Rule to merge individual FASTA files into a single file
 rule merge_fasta_files:
     input:
         fasta1 = "{output_directory}/{sra_id}/blast/{sra_id}_1.fasta",
@@ -94,11 +164,21 @@ rule merge_fasta_files:
         merged_fasta = "{output_directory}/{sra_id}/blast/{sra_id}_merged.fasta"
     shell:
         """
+        # Merges the individual FASTA files to a single file
         cat {input.fasta1} {input.fasta2} > {output.merged_fasta}
+
+        # Check whether the fasta files are empty and delete them
+        if [ ! -s {input.fasta1} ]; then
+            rm {input.fasta1}
+        fi
+        
+        if [ ! -s {input.fasta2} ]; then
+            rm {input.fasta2}
+        fi
         """
 
 
-# Merge all individual merged FASTA files into one comprehensive file
+# Rule to merge all individual merged FASTA files into one comprehensive file
 rule merge_all_fasta:
     input:
         expand("{output_directory}/{sra_id}/blast/{sra_id}_merged.fasta", output_directory=output_directory, sra_id=extract_sra_ids(csv_file))
@@ -111,7 +191,7 @@ rule merge_all_fasta:
         """
 
 
-# Create a BLAST database from the comprehensive merged FASTA file
+# Rule to create a BLAST database from the comprehensive merged FASTA file
 rule create_combined_blast_db:
     input:
         all_merged_fasta = "{output_directory}/blast_db/all_merged.fasta"
@@ -125,7 +205,7 @@ rule create_combined_blast_db:
         """
 
 
-# Calculate the average sequence length from the comprehensive FASTA file
+# Rule to calculate the average sequence length from the comprehensive FASTA file
 rule calculate_average_length_from_db_fasta:
     input:
         db_fasta="{output_directory}/blast_db/all_merged.fasta"
@@ -137,7 +217,7 @@ rule calculate_average_length_from_db_fasta:
             f.write(str(window_size))
 
 
-# Fragment the query sequences based on the average sequence length
+# Rule to fragment the query sequences based on the average sequence length
 rule fragment_query_sequences:
     input:
         query_fasta=config["query_fasta"],
@@ -150,7 +230,7 @@ rule fragment_query_sequences:
         split_sequences(input.query_fasta, output.fragmented_fasta, window_size)
 
 
-# Perform a BLAST search of fragmented query sequences against the combined database
+# Rule to perform a BLAST search of fragmented query sequences against the combined database
 rule blastn_search:
     input:
         db_nhr = "{output_directory}/blast_db/combined_blast_db.nhr",
@@ -239,16 +319,4 @@ rule fetch_publication_ids_for_projects:
             fi
             rm temp.xml
         done < {input.matching_project_ids}
-        """
-
-
-# Rule to signify the end of the workflow and display a success message
-rule finish_workflow:
-    input:
-        # Ensure the results have been created
-        alignment_results = os.path.join(config["output_directory"], "alignment_results.txt"),
-    output:
-    shell:
-        """
-        echo "Processing successfully completed!"
         """

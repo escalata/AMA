@@ -1,6 +1,6 @@
-csv_file: "/genbank_store/agata/data/SRA_list_Marcelino_firstten.csv"
+csv_file: "/genbank_store/max/download/results1/downloaded_sra_ids.csv"
 output_directory: "/genbank_store/max/download/results1"
-query_fasta: "/genbank_store/agata/data/Ostreobium_query.fa"
+query_fasta: "/genbank_store/max/data/Ostreobium_query.fa"
 blast_search:
     perc_identity: 90
     qcov_hsp_perc: 90
