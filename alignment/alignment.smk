@@ -90,7 +90,7 @@ onsuccess:
     # Print the results
     print("Processing Summary")
     print("---------------------------------")
-    print(f"Number of successfully downloaded SRA IDs: {num_success_sra_ids}")
+    print(f"Number of successful SRA ID downloads: {num_success_sra_ids}")
     print(f"Number of SRA IDs with results: {num_sra_ids_from_results}")
     print(f"Number of results from the BLAST search with perc_identity= {config['blast_search']['perc_identity']} and qcov_hsp_perc= {config['blast_search']['qcov_hsp_perc']}: {num_blast_results}")
     print("---------------------------------")
