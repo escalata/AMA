@@ -1,6 +1,6 @@
 # AMA
 
-This is an **snakemake** and **python** automated workflow tool for downloading and processing bioinformatic data. This workflow was developed by Agata and Max in collaboration with the bioinformatics group BioLab at the University of Melbourne under the supervision of Heroen Verbruggen.
+This is an **snakemake** and **python** automated workflow tool for downloading and processing bioinformatic data. This workflow was developed by Agata and Max in collaboration with the bioinformatics lab [Verbruggen Laboratory](https://hverbruggen.github.io//) at the University of Melbourne under the supervision of Heroen Verbruggen.
 
 
 ## Introduction
