@@ -129,7 +129,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 ## Output structure
 
-The pipeline will create folders per SRA run accessions and generate results using the run accession as the prefix (**XXX**). The download and analysis of data will be stored in the given superfolder output directory `results1`. Each modular part of the analysis workflow is stored in their corresponding folders within the single run accessions. This makes the data clean seperated and easy to change a part of the workflow. The results of the analysis workflow among all SRA run accessions is processed and stored in the `blast_db` and the visulized in the `results.txt`.
+The pipeline will create folders per SRA run accessions and generate results using the run accession as the prefix (**XXX**). The download and analysis of data will be stored in the given superfolder output directory `results1`. Each modular part of the analysis workflow is stored in their corresponding folders within the single run accessions. This makes the data clean seperated and easy to change a single part of the workflow. The results of the analysis workflow among all SRA run accessions are processed and stored and visualized in the `alignment_results.txt`.
 
  
 ### The complete outline of directory structure is shown below:
@@ -139,6 +139,7 @@ The pipeline will create folders per SRA run accessions and generate results usi
 
 ## Workflow
 
+The complete bioinformatic Workflow is shown in the diagram below.
 
 <img src="https://github.com/escalata/AMA/blob/main/Picture_Workflow.png" width="600" height="1300">
 
