@@ -121,10 +121,10 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
    If your data looks promising the next part of the modular workflow will be the full download running the snakefile `download.smk` skript with `download_perc:` parameter 100 to get access to the whole dataset. Also keep in mind to change the `output_directory:` to a new created empty folder to don`t mix up with the validation download. Run the script with the snakemake bash syntax:
 
-      >
-      > ```bash
-      > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/config_download.yaml --cores 16
-      > ```
+     >
+     > ```bash
+     > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/config_download.yaml --cores 16
+     > ```
 
 
 ## Output structure
