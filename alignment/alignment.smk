@@ -1,4 +1,5 @@
 import os
+import shutil
 from Bio import SeqIO
 from datetime import datetime
 
@@ -55,9 +56,9 @@ rule all:
     input:
         alignment_results = os.path.join(config["output_directory"], "alignment_results.txt"),
         #results_sra_ids_csv = os.path.join(config["output_directory"], "publication_info/results_sra_ids.csv"),
-        matching_project_ids = os.path.join(config["output_directory"], "publication_info/matching_project_ids.txt"),
-        full_project_ids = os.path.join(config["output_directory"], "publication_info/full_project_ids.txt"),
-        publications = os.path.join(config["output_directory"], "publication_info/matching_publications.txt")
+        complete_project_ids = os.path.join(config["output_directory"], "publication_info/complete_project_ids.txt"),
+        results_project_ids = os.path.join(config["output_directory"], "publication_info/results_project_ids.txt"),
+        publications = os.path.join(config["output_directory"], "publication_info/results_publications.txt")
 
 
 # Define the handlers
@@ -210,7 +211,7 @@ rule calculate_average_length_from_db_fasta:
     input:
         db_fasta="{output_directory}/blast_db/all_merged.fasta"
     output:
-        window_size_file="{output_directory}/blast_db/window_size.txt"
+        window_size_file=temp("{output_directory}/blast_db/window_size.txt")
     run:
         window_size = calculate_average_length(input.db_fasta)
         with open(output.window_size_file, "w") as f:
@@ -223,7 +224,7 @@ rule fragment_query_sequences:
         query_fasta=config["query_fasta"],
         window_size_file="{output_directory}/blast_db/window_size.txt"
     output:
-        fragmented_fasta="{output_directory}/blast_db/query_fragmented.fasta"
+        fragmented_fasta="{output_directory}/blast_db/fragmented_query.fasta"
     run:
         with open(input.window_size_file) as f:
             window_size = int(f.read().strip())
@@ -236,7 +237,7 @@ rule blastn_search:
         db_nhr = "{output_directory}/blast_db/combined_blast_db.nhr",
         db_nin = "{output_directory}/blast_db/combined_blast_db.nin",
         db_nsq = "{output_directory}/blast_db/combined_blast_db.nsq",
-        query = "{output_directory}/blast_db/query_fragmented.fasta"
+        query = "{output_directory}/blast_db/fragmented_query.fasta"
     output:
         alignment_results = "{output_directory}/alignment_results.txt"
     params:
@@ -259,7 +260,7 @@ rule parse_metadata:
                sra_id=extract_sra_ids(csv_file))
     output:
         # Output file listing all project IDs
-        project_ids_file = "{output_directory}/publication_info/full_project_ids.txt"
+        project_ids_file = "{output_directory}/publication_info/complete_project_ids.txt"
     run:
         # Create the publication_info directory if it does not exist
         if not os.path.exists(os.path.dirname(output.project_ids_file)):
@@ -287,24 +288,24 @@ rule parse_metadata:
 
 
 # Extract project IDs matching the BLAST search results
-rule extract_matching_project_ids:
+rule extract_results_project_ids:
     input:
         alignment_results = "{output_directory}/alignment_results.txt"
     output:
-        matching_project_ids = "{output_directory}/publication_info/matching_project_ids.txt"
+        results_project_ids = "{output_directory}/publication_info/results_project_ids.txt"
     shell:
         """
         awk -F"\t" '{{print $2}}' {input.alignment_results} | sed 's/\..*//' | sort -u > {output_directory}/results_sra_ids.csv
-        grep -F -f {output_directory}/results_sra_ids.csv {output_directory}/publication_info/full_project_ids.txt > {output.matching_project_ids}
+        grep -F -f {output_directory}/results_sra_ids.csv {output_directory}/publication_info/complete_project_ids.txt > {output.results_project_ids}
         """
 
 
 # Fetch publication IDs for projects based on matching project IDs
 rule fetch_publication_ids_for_projects:
     input:
-        matching_project_ids = os.path.join(config["output_directory"], "publication_info/matching_project_ids.txt")
+        results_project_ids = os.path.join(config["output_directory"], "publication_info/results_project_ids.txt")
     output:
-        publications = os.path.join(config["output_directory"], "publication_info/matching_publications.txt")
+        publications = os.path.join(config["output_directory"], "publication_info/results_publications.txt")
     shell:
         """
         set -x
@@ -318,5 +319,5 @@ rule fetch_publication_ids_for_projects:
                 echo "$project_id, No publication ID found" >> {output.publications}
             fi
             rm temp.xml
-        done < {input.matching_project_ids}
+        done < {input.results_project_ids}
         """

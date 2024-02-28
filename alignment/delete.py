@@ -40,13 +40,12 @@ def reset_operations(output_directory):
     print("Reset completed.")
 
 
-# Load configuration from a YAML file
+# Load configuration from the config_alignment.yaml file
 def load_config(filename):
     with open(filename, 'r') as f:
         return yaml.safe_load(f)
 
-
-# Example usage
+# Start
 if __name__ == "__main__":
     config = load_config("config_alignment.yaml")
     output_directory = config.get("output_directory", "default_output_directory")
