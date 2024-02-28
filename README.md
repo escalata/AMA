@@ -107,13 +107,14 @@ The workflow was designed to be fast and memory-optimized. The download works wi
      > ```
 
 
-> [!TIP]
-> - If you want to rerun the processing on the same downloads again. For example try again with different parameter. You can do it by executing the provided python script `delete.py`. It will delete all previous generated processing workflow results by the alignment script but dont harm the downloads. Afterwards just rerun the snakemake alignment script again. The python script is located in the alignment directory, just run it with the bash syntax:
+- **delete**
 
->
-> ```bash
-> python delete.py
-> ```
+   If you want to rerun the processing on the same downloads again. For example try again with different parameter. You can do it by executing the provided python script `delete.py`. It will delete all previous generated processing workflow results by the alignment script but dont harm the downloads. Afterwards just rerun the snakemake alignment script again. The python script is located in the alignment directory, just run it with the bash syntax:
+
+     >
+     > ```bash
+     > python delete.py
+     > ```
 
 
 - **Full Download**
