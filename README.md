@@ -63,9 +63,9 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 - **config_alignment**
 
-   - `csv_file`: Same like above `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
+   - `csv_file`: It is important to reference the csv file `downloaded_sra_ids.csv` created by the download script here, as this is an updated version of the original csv file in which the failed downloads have already been deleted. `/genbank_store/biodiversity_project/result1/downloaded_sra_ids.csv`
 
-   - `output_directory:` Same like above `/genbank_store/biodiversity_project/result1`
+   - `output_directory:` Same like in the config_download `/genbank_store/biodiversity_project/result1`
 
    - `query_fasta:` The path to the reference sequence against Blast compares the individual sequences and calculates their match `/genbank_store/biodiversity_project/data/example_reference.fa`
 
@@ -119,7 +119,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 - **Full Download**
 
-   If your data looks promising the next part of the modular workflow will be the full download running the snakefile `download.smk` skript with `download_perc:` parameter 100 to get access to the whole dataset. Also keep in mind to change the `output_directory:` to a new created empty folder to don`t mix up with the validation download. Run the script with the snakemake bash syntax:
+   If your data looks promising the next part of the modular workflow will be the full download running the snakefile `download.smk` skript with `download_perc:` parameter 100 to get access to the whole dataset. Also keep in mind to change the `output_directory:`of the config_download to a new created empty folder to don`t mix up with the validation download. Run the script with the snakemake bash syntax:
 
      >
      > ```bash
