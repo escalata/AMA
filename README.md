@@ -141,6 +141,6 @@ The pipeline will create folders per SRA run accessions and generate results usi
 
 ### The complete bioinformatic workflow picture:
 
-<img src="https://github.com/escalata/AMA/blob/main/Picture_Workflow.png" width="600" height="1300">
+<img src="https://github.com/escalata/AMA/blob/main/Picture_Workflow.png" width="600" height="1350">
 
 ### Dependencies
