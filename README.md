@@ -129,7 +129,7 @@ The pipeline will create folders per SRA run accessions and generate results usi
 
 ## Workflow
 
-![workflow](https://github.com/escalata/AMA/blob/main/Picture_Workflow.png)
 
+<img src="https://github.com/escalata/AMA/blob/main/Picture_Workflow.png" width="100" height="100">
 
 ### Dependencies
