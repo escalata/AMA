@@ -52,7 +52,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
 
 
-- **download_config**
+- **config_download**
 
    - `csv_file:` The path to the csv file containing the results (SRA accessions) generated with the selected search string within the NIH database search `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
 
@@ -61,7 +61,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
    - `download_perc:` The percentage of how much of the datasets should be downloaded for each individual SRR accession we would suggest `10` for the validation download and `100` for the full download later on
 
 
-- **alignment_config**
+- **config_alignment**
 
    - `csv_file`: Same like above `/genbank_store/biodiversity_project/data/SRA_list_example.csv`
 
@@ -93,7 +93,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
      >
      > ```bash
-     > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/download_config.yaml --cores 16
+     > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/config_download.yaml --cores 16
      > ```
 
 
@@ -103,17 +103,27 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
      >
      > ```bash
-     > snakemake --snakefile /genbank_store/biodiversity_project/workflow/alignment.smk --configfile /genbank_store/biodiversity_project/workflow/alignment_config.yaml --cores 16
+     > snakemake --snakefile /genbank_store/biodiversity_project/workflow/alignment.smk --configfile /genbank_store/biodiversity_project/workflow/config_alignment.yaml --cores 16
      > ```
+
+
+[!TIP]
+> - If you want to rerun the processing on the same downloads again. For example if you are not happy with the results and want to try it with different parameters again, you can do it by executing the provided python script `delete.py`. It will delete all previous generated processing workflow results by the alignment script but dont harm the downloads. Afterwards just rerun the snakemake alignment script again. The python script is located in the alignment directory, just run it with the bash syntax:
+
+   >
+   > ```bash
+     python delete.py
+   > ```
+   >
 
 
 - **Full Download**
 
-   If your data looks promising the next part of the modular workflow will be the full download running the snakefile `download.smk` skript with `download_perc:` parameter 100 to get access to the whole dataset with the snakemake bash syntax:
+   If your data looks promising the next part of the modular workflow will be the full download running the snakefile `download.smk` skript with `download_perc:` parameter 100 to get access to the whole dataset. Also keep in mind to change the `output_directory:` to a new created empty folder to don`t mix up with the validation download. Run the script with the snakemake bash syntax:
 
      >
      > ```bash
-     > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/download_config.yaml --cores 16
+     > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/config_download.yaml --cores 16
      > ```
 
 
