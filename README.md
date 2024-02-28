@@ -91,40 +91,40 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
    The first step and modular part of the workflow will be the partial download running the snakefile `download.smk` skript with `download_perc:` parameter 10-20 to validate the datasets fast and memory-optimized with the snakemake bash syntax:
 
-     >
-     > ```bash
-     > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/config_download.yaml --cores 16
-     > ```
+      >
+      > ```bash
+      > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/config_download.yaml --cores 16
+      > ```
 
 
 - **Processing**
 
    The next step is the preprocessing and alignment with FastP and Blast there are plenty of paramenters to adjust preprocessing trimming and quality control of the input sequences which can change the output significant if you want to adjust some variables have a look at [FastP](https://github.com/OpenGene/fastp) and [Blast](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and change it in the snakefile `alignment.smk` script then run it with the snakemake bash syntax:
 
-     >
-     > ```bash
-     > snakemake --snakefile /genbank_store/biodiversity_project/workflow/alignment.smk --configfile /genbank_store/biodiversity_project/workflow/config_alignment.yaml --cores 16
-     > ```
+      >
+      > ```bash
+      > snakemake --snakefile /genbank_store/biodiversity_project/workflow/alignment.smk --configfile /genbank_store/biodiversity_project/workflow/config_alignment.yaml --cores 16
+      > ```
 
 
-- **delete**
+- **Delete**
 
-   If you want to rerun the processing on the same downloads again. For example try again with different parameter. You can do it by executing the provided python script `delete.py`. It will delete all previous generated processing workflow results by the alignment script but dont harm the downloads. Afterwards just rerun the snakemake alignment script again. The python script is located in the alignment directory, just run it with the bash syntax:
+   If you want to rerun the processing on the same downloads again. For example try again with different parameter. You can do it by simply executing the provided python script `delete.py`. It will delete all previous generated processing workflow results by the alignment script but dont harm the downloads. Afterwards just rerun the snakemake alignment script again. The python script is located in the alignment directory, just run it with the bash syntax:
 
-     >
-     > ```bash
-     > python delete.py
-     > ```
+      >
+      > ```bash
+      > python delete.py
+      > ```
 
 
 - **Full Download**
 
    If your data looks promising the next part of the modular workflow will be the full download running the snakefile `download.smk` skript with `download_perc:` parameter 100 to get access to the whole dataset. Also keep in mind to change the `output_directory:` to a new created empty folder to don`t mix up with the validation download. Run the script with the snakemake bash syntax:
 
-     >
-     > ```bash
-     > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/config_download.yaml --cores 16
-     > ```
+      >
+      > ```bash
+      > snakemake --snakefile /genbank_store/biodiversity_project/download/download.smk --configfile /genbank_store/biodiversity_project/download/config_download.yaml --cores 16
+      > ```
 
 
 ## Output structure
@@ -132,14 +132,14 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 The pipeline will create folders per SRA run accessions and generate results using the run accession as the prefix (**XXX**). The download and analysis of data will be stored in the given superfolder output directory `results1`. Each modular part of the analysis workflow is stored in their corresponding folders within the single run accessions. This makes the data clean seperated and easy to change a single part of the workflow. The results of the analysis workflow among all SRA run accessions are processed and stored and visualized in the `alignment_results.txt`.
 
  
-### The complete outline of directory structure is shown below:
+### The complete outline of directory structure picture:
 
 ![Output structure and complete file hirarchie](https://github.com/escalata/AMA/blob/main/Picture_complete_hirarchieV2.png)
 
 
 ## Workflow
 
-The complete bioinformatic Workflow is shown in the diagram below.
+### The complete bioinformatic workflow picture:
 
 <img src="https://github.com/escalata/AMA/blob/main/Picture_Workflow.png" width="600" height="1300">
 
