@@ -69,7 +69,7 @@ The workflow was designed to be fast and memory-optimized. The download works wi
 
    - `query_fasta:` The path to the reference sequence against Blast compares the individual sequences and calculates their match `/genbank_store/biodiversity_project/data/example_reference.fa`
 
-   - `perc_identity:` Threshold, how much percentage of the sequence should matching `95`
+   - `perc_identity:` Threshold, how much percentage of the sequence should matching `90`
 
    - `qcov_hsp_perc:` Threshold, how much percentage of the query fasta is covered `90`
 
@@ -127,6 +127,9 @@ The workflow was designed to be fast and memory-optimized. The download works wi
      > ```
 
 
+- **Primer Detection
+
+
 ## Output structure
 
 The pipeline will create folders per SRA run accessions and generate results using the run accession as the prefix (**XXX**). The download and analysis of data will be stored in the given superfolder output directory `results1`. Each modular part of the analysis workflow is stored in their corresponding folders within the single run accessions. This makes the data clean seperated and easy to change a single part of the workflow. The results of the analysis workflow among all SRA run accessions are processed and stored and visualized in the `alignment_results.txt`.
@@ -143,4 +146,15 @@ The pipeline will create folders per SRA run accessions and generate results usi
 
 <img src="https://github.com/escalata/AMA/blob/main/Picture_workflowV2.png" width="600" height="1360">
 
+
 ### Dependencies
+
+- [Verbruggen Laboratory](https://hverbruggen.github.io//)
+
+- [ARA](https://github.com/maurya-anand/ARA/tree/main)
+
+- [FastP](https://github.com/OpenGene/fastp)
+
+- [Blast](https://blast.ncbi.nlm.nih.gov/Blast.cgi)
+
+- [Conda](https://github.com/conda/conda-docs)
