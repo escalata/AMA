@@ -1,0 +1,15 @@
+name: AMA
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies: 
+  - python
+  - snakemake
+  - sra-tools
+  - fastp
+  - blast
+  - curl
+  - wget
+  - bc
+  - entrez-direct
